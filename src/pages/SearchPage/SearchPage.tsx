@@ -15,7 +15,7 @@ function SearchPage() {
 
   return (
     <div className="grid grid-cols-[200px_1fr] grid-rows-[auto_1fr] h-screen">
-      <header className="col-span-2" style={{ background: "plum" }}>
+      <header className="col-span-2">
         <SearchBar onSearch={handleSearch} />
       </header>
 
