@@ -36,7 +36,17 @@ function CategoryFilter({
 
   return (
     <div className="filter-block">
-      <h3 className="filter-label">Categories</h3>
+      <h3 className="filter-label">
+        Categories
+        {categories.length > 0 && (
+          <span
+            className="ml-1 decoration-dotted underline cursor-pointer normal-case font-normal"
+            onClick={() => onChange([])}
+          >
+            reset
+          </span>
+        )}
+      </h3>
       {status === "pending" && <div>Loading...</div>}
       {status === "error" && <div>Error: {error.message}</div>}
       {status === "success" &&
