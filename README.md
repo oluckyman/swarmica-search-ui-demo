@@ -1,6 +1,13 @@
-## Setup and Running
+# Setup and Running
 
 `pnpm i && pnpm dev`
+
+# Assumptions
+
+- assuming that locale filter scopes _data_, not UI language
+- assuming that `category.name[locale]` is populated for all advertised locales (`/api/instance`)
+- search without locale filter (`locale=null`) yields redundant multilingual results. So it doesn't make sense to search without locale filter. UI enforces locale selection to search
+- assuming there are few locales (2-4), hence the use of radio buttons
 
 # Test assignment for Swarmica
 

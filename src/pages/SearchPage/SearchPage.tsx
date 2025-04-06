@@ -24,7 +24,7 @@ function SearchPage() {
       </aside>
 
       <main style={{ background: "lightcyan" }}>
-        <SearchResults query={searchQuery} />
+        <SearchResults locale={locale} query={searchQuery} />
       </main>
     </div>
   );
