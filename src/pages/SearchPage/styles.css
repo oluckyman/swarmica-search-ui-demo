@@ -7,3 +7,7 @@
 .filter-label {
   @apply uppercase font-bold text-xs text-gray-500 mb-2;
 }
+
+.hl {
+  font-weight: bolder;
+}

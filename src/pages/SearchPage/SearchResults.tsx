@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify";
 import { useQuery } from "@tanstack/react-query";
 import { fetchApi } from "@/api";
 
@@ -5,7 +6,7 @@ const url = "api/search/articles";
 
 interface ArticleDto {
   id: number;
-  status: string;
+  status: "DRAFT" | "UNAPPROVED" | "APPROVED" | "PUBLISHED" | "ARCHIVED";
   highlight: { title: string; body: string };
   public_urls: { [locale: string]: string };
   created_at: string;
@@ -14,6 +15,10 @@ interface ArticleDto {
 type SearchResponse = {
   results: ArticleDto[];
 };
+
+function safeHtml(rawHtml: string) {
+  return DOMPurify.sanitize(rawHtml.replace(/<hl>(.*?)<\/hl>/g, "<span class='hl'>$1</span>"));
+}
 
 function SearchResults({ query, locale, categories }: { query: string; locale: string | null; categories: number[] }) {
   const { status, data, error } = useQuery({
@@ -50,8 +55,17 @@ function SearchResults({ query, locale, categories }: { query: string; locale: s
       </div>
       {data?.map((article) => (
         <article key={article.id} className="p-2 text-gray-800">
-          <h2 className="font-bold break-words mb-1">{article.highlight.title}</h2>
-          <p className="text-sm break-words">{article.highlight.body}</p>
+          <h2 className="font-bold break-words mb-1">
+            <span dangerouslySetInnerHTML={{ __html: safeHtml(article.highlight.title) }} />
+            <span className="text-xs opacity-40"> • {article.status}</span>
+          </h2>
+          <p className="text-sm break-words">
+            <span className="opacity-50">{article.created_at.substring(0, 10)} — </span>
+            <span
+              className="text-sm break-words"
+              dangerouslySetInnerHTML={{ __html: safeHtml(article.highlight.body) }}
+            />
+          </p>
         </article>
       ))}
     </div>

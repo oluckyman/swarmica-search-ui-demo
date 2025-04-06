@@ -10,7 +10,7 @@ function SearchPage() {
   const [locale, setLocale] = useState<string | null>(null);
   const [categories, setCategories] = useState<number[]>([]);
 
-  const handleSearch = useCallback((query: string) => setSearchQuery(query), []);
+  const handleSearch = useCallback((nextQuery: string) => setSearchQuery(nextQuery), []);
   const handleLocaleChange = useCallback((nextLocale: string) => setLocale(nextLocale), []);
   const handleCategoriesChange = useCallback((nextCategories: number[]) => setCategories(nextCategories), []);
 
