@@ -15,11 +15,7 @@ type CategoriesResponse = {
 const url = "/api/categories/";
 
 function CategoryFilter() {
-  const {
-    status,
-    data: categories,
-    error,
-  } = useQuery({
+  const { status, data, error } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchApi<CategoriesResponse>(url),
     select: (data) => data.results,
@@ -30,7 +26,7 @@ function CategoryFilter() {
       <h3>Categories</h3>
       {status === "pending" && <div>Loading...</div>}
       {status === "error" && <div>Error: {error.message}</div>}
-      {status === "success" && categories.map((c, i) => <div key={i}>{c.name.en}</div>)}
+      {status === "success" && data.map((c, i) => <div key={i}>{c.name.en}</div>)}
     </div>
   );
 }

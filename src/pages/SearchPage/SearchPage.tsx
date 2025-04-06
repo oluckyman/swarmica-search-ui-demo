@@ -1,10 +1,20 @@
+import { useCallback, useState } from "react";
+import SearchBar from "./SearchBar";
 import LocaleFilter from "./LocaleFilter";
 import CategoryFilter from "./CategoryFilter";
 
 function SearchPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = useCallback((query: string) => {
+    setSearchQuery(query);
+  }, []);
+
   return (
     <div>
-      <header style={{ background: "plum" }}>Search Bar</header>
+      <header style={{ background: "plum" }}>
+        <SearchBar onSearch={handleSearch} />
+      </header>
 
       <aside style={{ background: "lightyellow" }}>
         <h1>Filters</h1>
@@ -12,7 +22,7 @@ function SearchPage() {
         <CategoryFilter />
       </aside>
 
-      <main style={{ background: "lightcyan" }}>Search results</main>
+      <main style={{ background: "lightcyan" }}>Search results for: {searchQuery}</main>
     </div>
   );
 }
