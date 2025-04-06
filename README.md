@@ -9,6 +9,11 @@
 - search without locale filter (`locale=null`) yields redundant multilingual results. So it doesn't make sense to search without locale filter. UI enforces locale selection to search
 - assuming there are few locales (2-4), hence the use of radio buttons
 
+# Next steps
+
+- store search query and filters in URL
+- handle paging
+
 # Test assignment for Swarmica
 
 На React + Typescript + vite написать веб-приложение, которое будет выполнять поиск статей базы знаний с фильтрацией по разделу БЗ / локали, отображать результаты поиска и сохранять просмотренные результаты в localStorage.

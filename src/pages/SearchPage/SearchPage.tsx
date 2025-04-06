@@ -25,7 +25,7 @@ function SearchPage() {
         <CategoryFilter locale={locale} categories={categories} onChange={handleCategoriesChange} />
       </aside>
 
-      <main style={{ background: "lightcyan" }}>
+      <main className="overflow-auto overflow-x-hidden">
         <SearchResults locale={locale} query={searchQuery} categories={categories} />
       </main>
     </div>
