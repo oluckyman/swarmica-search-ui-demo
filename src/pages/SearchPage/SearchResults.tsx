@@ -51,13 +51,7 @@ function SearchResults({ query, locale, categories }: { query: string; locale: s
     enabled: locale !== null && query.length > 0,
   });
 
-  const [seenArticles, setSeenArticles] = useLocaleStorage<number[]>("seen", []);
-
-  const handleArticleClick = (articleId: number) => {
-    if (articleId && !seenArticles.includes(articleId)) {
-      setSeenArticles((prev) => [...prev, articleId]);
-    }
-  };
+  const [seenArticles, setSeenArticles] = useLocaleStorage<Record<number, number>>("seen", {});
 
   if (query === "") {
     return (
@@ -84,15 +78,12 @@ function SearchResults({ query, locale, categories }: { query: string; locale: s
         )}
       </div>
       {data?.map((article) => (
-        <article
-          key={article.id}
-          className={`p-2 ${seenArticles.includes(article.id) ? "text-gray-400" : "text-gray-800"}`}
-        >
+        <article key={article.id} className={`p-2 ${seenArticles[article.id] ? "text-gray-400" : "text-gray-800"}`}>
           <a
             href={article.public_urls[locale!]}
             target="_blank"
             className="hover:underline"
-            onClick={() => handleArticleClick(article.id)}
+            onClick={() => setSeenArticles((prev) => ({ ...prev, [article.id]: Date.now() }))}
           >
             <h2 className="font-bold break-words mb-1">
               <span dangerouslySetInnerHTML={{ __html: safeHtml(article.highlight.title) }} />
