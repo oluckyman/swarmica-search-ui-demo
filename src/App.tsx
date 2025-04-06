@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import "./App.css";
 
 interface CategoryDto {
@@ -15,20 +15,26 @@ type CategoriesResponse = {
 const categoriesUrl = "/api/categories/";
 
 function App() {
-  const [categories, setCategories] = useState<string[]>([]);
-  useEffect(() => {
-    fetch(categoriesUrl)
-      .then((res) => res.json())
-      .then((data: CategoriesResponse) => data.results.map((d) => d.name.en))
-      .then(setCategories);
-  }, []);
+  const {
+    status,
+    data: categories,
+    error,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await fetch(categoriesUrl);
+      if (!res.ok) throw new Error(`HTTP status: ${res.status}`);
+      return (await res.json()) as CategoriesResponse;
+    },
+    select: (data) => data.results,
+  });
 
   return (
     <>
       <h1>Categories</h1>
-      {categories.map((c, i) => (
-        <div key={i}>{c}</div>
-      ))}
+      {status === "pending" && <div>Loading...</div>}
+      {status === "error" && <div>Error: {error.message}</div>}
+      {status === "success" && categories.map((c, i) => <div key={i}>{c.name.en}</div>)}
     </>
   );
 }
