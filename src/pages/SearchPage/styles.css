@@ -1,0 +1,9 @@
+@reference "tailwindcss";
+
+.filter-block {
+  @apply p-4 text-sm;
+}
+
+.filter-label {
+  @apply uppercase font-bold text-xs text-gray-500 mb-2;
+}

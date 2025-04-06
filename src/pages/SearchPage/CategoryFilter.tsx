@@ -35,8 +35,8 @@ function CategoryFilter({
       : onChange([...categories, categoryId]);
 
   return (
-    <div>
-      <h3>Categories</h3>
+    <div className="filter-block">
+      <h3 className="filter-label">Categories</h3>
       {status === "pending" && <div>Loading...</div>}
       {status === "error" && <div>Error: {error.message}</div>}
       {status === "success" &&
@@ -44,6 +44,7 @@ function CategoryFilter({
           <div key={c.id}>
             <label>
               <input
+                className="mr-2"
                 type="checkbox"
                 name={`category-${c.id}`}
                 checked={categories.includes(c.id)}

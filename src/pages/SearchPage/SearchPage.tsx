@@ -3,6 +3,7 @@ import SearchBar from "./SearchBar";
 import LocaleFilter from "./LocaleFilter";
 import CategoryFilter from "./CategoryFilter";
 import SearchResults from "./SearchResults";
+import "./styles.css";
 
 function SearchPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,13 +15,12 @@ function SearchPage() {
   const handleCategoriesChange = useCallback((nextCategories: number[]) => setCategories(nextCategories), []);
 
   return (
-    <div className="grid grid-cols-[200px_1fr] grid-rows-[auto_1fr] h-screen">
+    <div className="grid grid-cols-[220px_1fr] grid-rows-[auto_1fr] h-screen">
       <header className="col-span-2">
         <SearchBar onSearch={handleSearch} />
       </header>
 
-      <aside style={{ background: "lightyellow" }}>
-        <h1>Filters</h1>
+      <aside>
         <LocaleFilter locale={locale} onChange={handleLocaleChange} />
         <CategoryFilter locale={locale} categories={categories} onChange={handleCategoriesChange} />
       </aside>

@@ -23,17 +23,26 @@ function LocaleFilter({ locale, onChange }: { locale: string | null; onChange: (
   }, [data, onChange]);
 
   return (
-    <div>
-      <h3>Locales</h3>
-      {status === "pending" && <div>Loading...</div>}
-      {status === "error" && <div>Error: {error.message}</div>}
-      {status === "success" &&
-        data.map((l) => (
-          <label key={l}>
-            <input type="radio" name="locale" value={l} checked={l === locale} onChange={() => onChange(l)} />
-            {l}
-          </label>
-        ))}
+    <div className="filter-block">
+      <h3 className="filter-label">Locales</h3>
+      <div className="flex gap-3">
+        {status === "pending" && <div>Loading...</div>}
+        {status === "error" && <div>Error: {error.message}</div>}
+        {status === "success" &&
+          data.map((l) => (
+            <label key={l}>
+              <input
+                className="mr-2"
+                type="radio"
+                name="locale"
+                value={l}
+                checked={l === locale}
+                onChange={() => onChange(l)}
+              />
+              {l}
+            </label>
+          ))}
+      </div>
     </div>
   );
 }
