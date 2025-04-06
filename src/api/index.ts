@@ -7,19 +7,3 @@ export const fetchApi =
     if (!res.ok) throw new Error(`HTTP status: ${res.status}`);
     return res.json() as T;
   };
-
-/*
-
-queryFn: async () => {
-  const res = await fetch(categoriesUrl);
-  if (!res.ok) throw new Error(`HTTP status: ${res.status}`);
-  return (await res.json()) as CategoriesResponse;
-},
-
-
-queryFn: async () => {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP status: ${res.status}`);
-  return (await res.json()) as LocalesResponse;
-},
-*/

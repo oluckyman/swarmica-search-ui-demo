@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchApi } from "../../api";
+import { fetchApi } from "@/api";
 
 interface CategoryDto {
   id: number;
