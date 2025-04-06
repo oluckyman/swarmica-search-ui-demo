@@ -15,10 +15,10 @@ type SearchResponse = {
   results: ArticleDto[];
 };
 
-function SearchResults({ query, locale }: { query: string; locale: string | null }) {
+function SearchResults({ query, locale, categories }: { query: string; locale: string | null; categories: number[] }) {
   const { status, data, error } = useQuery({
-    queryKey: ["search", locale, query],
-    queryFn: fetchApi<SearchResponse>(url, { search: query, locale }),
+    queryKey: ["search", locale, query, categories],
+    queryFn: fetchApi<SearchResponse>(url, { search: query, locale, category: categories }),
     select: (data) => data.results,
     enabled: locale !== null && query.length > 0,
   });
@@ -28,14 +28,19 @@ function SearchResults({ query, locale }: { query: string; locale: string | null
       {status === "pending" && "Loading…"}
       {status === "error" && `${error.message}`}
       {status === "success" &&
-        (data.length === 0
-          ? "No results found…"
-          : data.map((article) => (
+        (data.length === 0 ? (
+          "No results found…"
+        ) : (
+          <>
+            <p>{data.length} articles found</p>
+            {data.map((article) => (
               <article key={article.id}>
                 <h2>{article.highlight.title}</h2>
                 <p>{article.highlight.body}</p>
               </article>
-            )))}
+            ))}
+          </>
+        ))}
     </div>
   );
 }
