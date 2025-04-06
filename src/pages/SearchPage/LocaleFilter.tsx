@@ -17,10 +17,10 @@ function LocaleFilter({ locale, onChange }: { locale: string | null; onChange: (
 
   // Set the first locale as default when the data is ready
   useEffect(() => {
-    if (data && data.length > 0) {
+    if (locale === null && status === "success" && data.length > 0) {
       onChange(data[0]);
     }
-  }, [data, onChange]);
+  }, [data, locale, status, onChange]);
 
   return (
     <div className="filter-block">
