@@ -1,7 +1,7 @@
 import DOMPurify from "dompurify";
 import { useQuery } from "@tanstack/react-query";
 import { fetchApi } from "@/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const url = "api/search/articles";
 
@@ -21,6 +21,28 @@ function safeHtml(rawHtml: string) {
   return DOMPurify.sanitize(rawHtml.replace(/<hl>(.*?)<\/hl>/g, "<span class='hl'>$1</span>"));
 }
 
+// TODO: consider extracting into @/hooks module
+function useLocaleStorage<T>(key: string, defaultValue?: T): [T, React.Dispatch<React.SetStateAction<T>>] {
+  const [value, setValue] = useState<T>(() => {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null") ?? defaultValue;
+    } catch (error) {
+      console.error(`Error getting ${key} from localStorage: ${error}`);
+      return defaultValue;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.error(`Error setting ${key} in localStorage: ${error}`);
+    }
+  }, [key, value]);
+
+  return [value, setValue];
+}
+
 function SearchResults({ query, locale, categories }: { query: string; locale: string | null; categories: number[] }) {
   const { status, data, error } = useQuery({
     queryKey: ["search", locale, query, categories],
@@ -29,7 +51,7 @@ function SearchResults({ query, locale, categories }: { query: string; locale: s
     enabled: locale !== null && query.length > 0,
   });
 
-  const [seenArticles, setSeenArticles] = useState<number[]>([]);
+  const [seenArticles, setSeenArticles] = useLocaleStorage<number[]>("seen", []);
 
   const handleArticleClick = (articleId: number) => {
     if (articleId && !seenArticles.includes(articleId)) {
@@ -49,8 +71,7 @@ function SearchResults({ query, locale, categories }: { query: string; locale: s
   }
 
   return (
-    <div>
-      {/* Status and results count block */}
+    <div className="pb-20">
       <div className="text-xs py-4 px-2 text-gray-500">
         {status === "pending" && <p className="text-gray-500">Loading…</p>}
         {status === "error" && <p className="text-red-500">{error.message}</p>}
