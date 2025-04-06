@@ -13,6 +13,7 @@
 
 - store search query and filters in URL
 - handle paging
+- keep search results while loading
 
 # Test assignment for Swarmica
 

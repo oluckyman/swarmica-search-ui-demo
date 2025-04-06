@@ -16,7 +16,7 @@ function SearchBar({ isDisabled, onSearch }: { isDisabled: boolean; onSearch: (s
         <input
           disabled={isDisabled}
           tabIndex={1}
-          className="flex-1 border border-gray-300 rounded-md px-4 py-2"
+          className="flex-1 border border-gray-300 rounded-md px-4 py-2 text-lg"
           autoFocus
           type="search"
           placeholder="Search for articles…"

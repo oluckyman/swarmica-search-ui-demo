@@ -15,7 +15,7 @@ function SearchPage() {
   const handleCategoriesChange = useCallback((nextCategories: number[]) => setCategories(nextCategories), []);
 
   return (
-    <div className="grid grid-cols-[220px_1fr] grid-rows-[auto_1fr] h-screen">
+    <div className="grid grid-cols-[220px_1fr] grid-rows-[auto_1fr] h-screen max-w-screen-lg mx-auto">
       <header className="col-span-2">
         <SearchBar isDisabled={locale === null} onSearch={handleSearch} />
       </header>
