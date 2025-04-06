@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import SearchBar from "./SearchBar";
 import LocaleFilter from "./LocaleFilter";
 import CategoryFilter from "./CategoryFilter";
+import SearchResults from "./SearchResults";
 
 function SearchPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,7 +23,9 @@ function SearchPage() {
         <CategoryFilter />
       </aside>
 
-      <main style={{ background: "lightcyan" }}>Search results for: {searchQuery}</main>
+      <main style={{ background: "lightcyan" }}>
+        <SearchResults query={searchQuery} />
+      </main>
     </div>
   );
 }
