@@ -1,3 +1,4 @@
+import LocaleFilter from "./LocaleFilter";
 import CategoryFilter from "./CategoryFilter";
 
 function SearchPage() {
@@ -7,6 +8,7 @@ function SearchPage() {
 
       <aside style={{ background: "lightyellow" }}>
         <h1>Filters</h1>
+        <LocaleFilter />
         <CategoryFilter />
       </aside>
 
