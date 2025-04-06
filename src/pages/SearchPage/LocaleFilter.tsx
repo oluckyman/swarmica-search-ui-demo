@@ -33,6 +33,7 @@ function LocaleFilter({ locale, onChange }: { locale: string | null; onChange: (
             <label key={l}>
               <input
                 className="mr-2"
+                tabIndex={3}
                 type="radio"
                 name="locale"
                 value={l}

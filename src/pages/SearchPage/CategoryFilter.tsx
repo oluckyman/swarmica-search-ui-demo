@@ -55,6 +55,7 @@ function CategoryFilter({
             <label>
               <input
                 className="mr-2"
+                tabIndex={4}
                 type="checkbox"
                 name={`category-${c.id}`}
                 checked={categories.includes(c.id)}

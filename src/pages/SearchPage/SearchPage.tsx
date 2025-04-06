@@ -17,7 +17,7 @@ function SearchPage() {
   return (
     <div className="grid grid-cols-[220px_1fr] grid-rows-[auto_1fr] h-screen">
       <header className="col-span-2">
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar isDisabled={locale === null} onSearch={handleSearch} />
       </header>
 
       <aside>
@@ -25,7 +25,7 @@ function SearchPage() {
         <CategoryFilter locale={locale} categories={categories} onChange={handleCategoriesChange} />
       </aside>
 
-      <main className="overflow-auto overflow-x-hidden">
+      <main className="overflow-y-auto overflow-x-hidden">
         <SearchResults locale={locale} query={searchQuery} categories={categories} />
       </main>
     </div>

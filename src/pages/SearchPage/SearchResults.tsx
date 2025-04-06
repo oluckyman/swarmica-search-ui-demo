@@ -92,10 +92,7 @@ function SearchResults({ query, locale, categories }: { query: string; locale: s
           </a>
           <p className="text-sm break-words">
             <span className="opacity-50">{article.created_at.substring(0, 10)} — </span>
-            <span
-              className="text-sm break-words"
-              dangerouslySetInnerHTML={{ __html: safeHtml(article.highlight.body) }}
-            />
+            <span dangerouslySetInnerHTML={{ __html: safeHtml(article.highlight.body) }} />
           </p>
         </article>
       ))}
