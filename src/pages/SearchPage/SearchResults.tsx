@@ -1,6 +1,7 @@
 import DOMPurify from "dompurify";
 import { useQuery } from "@tanstack/react-query";
 import { fetchApi } from "@/api";
+import { useState } from "react";
 
 const url = "api/search/articles";
 
@@ -28,6 +29,14 @@ function SearchResults({ query, locale, categories }: { query: string; locale: s
     enabled: locale !== null && query.length > 0,
   });
 
+  const [seenArticles, setSeenArticles] = useState<number[]>([]);
+
+  const handleArticleClick = (articleId: number) => {
+    if (articleId && !seenArticles.includes(articleId)) {
+      setSeenArticles((prev) => [...prev, articleId]);
+    }
+  };
+
   if (query === "") {
     return (
       <div className="flex items-center justify-center p-8 text-gray-500 bg-gray-50 rounded-lg">
@@ -54,11 +63,21 @@ function SearchResults({ query, locale, categories }: { query: string; locale: s
         )}
       </div>
       {data?.map((article) => (
-        <article key={article.id} className="p-2 text-gray-800">
-          <h2 className="font-bold break-words mb-1">
-            <span dangerouslySetInnerHTML={{ __html: safeHtml(article.highlight.title) }} />
-            <span className="text-xs opacity-40"> • {article.status}</span>
-          </h2>
+        <article
+          key={article.id}
+          className={`p-2 ${seenArticles.includes(article.id) ? "text-gray-400" : "text-gray-800"}`}
+        >
+          <a
+            href={article.public_urls[locale!]}
+            target="_blank"
+            className="hover:underline"
+            onClick={() => handleArticleClick(article.id)}
+          >
+            <h2 className="font-bold break-words mb-1">
+              <span dangerouslySetInnerHTML={{ __html: safeHtml(article.highlight.title) }} />
+              <span className="text-xs opacity-40"> •&nbsp;{article.status}</span>
+            </h2>
+          </a>
           <p className="text-sm break-words">
             <span className="opacity-50">{article.created_at.substring(0, 10)} — </span>
             <span
