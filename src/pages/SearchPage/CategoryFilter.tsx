@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { fetchApi } from "../../api";
 
 interface CategoryDto {
   id: number;
@@ -11,7 +12,7 @@ type CategoriesResponse = {
   results: CategoryDto[];
 };
 
-const categoriesUrl = "/api/categories/";
+const url = "/api/categories/";
 
 function CategoryFilter() {
   const {
@@ -20,11 +21,7 @@ function CategoryFilter() {
     error,
   } = useQuery({
     queryKey: ["categories"],
-    queryFn: async () => {
-      const res = await fetch(categoriesUrl);
-      if (!res.ok) throw new Error(`HTTP status: ${res.status}`);
-      return (await res.json()) as CategoriesResponse;
-    },
+    queryFn: fetchApi<CategoriesResponse>(url),
     select: (data) => data.results,
   });
 

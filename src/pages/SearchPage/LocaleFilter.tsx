@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { fetchApi } from "../../api";
 
 const url = "/api/instance/";
 
@@ -9,11 +10,7 @@ type LocalesResponse = {
 function LocaleFilter() {
   const { status, data, error } = useQuery({
     queryKey: ["locales"],
-    queryFn: async () => {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP status: ${res.status}`);
-      return (await res.json()) as LocalesResponse;
-    },
+    queryFn: fetchApi<LocalesResponse>(url),
     select: (data) => data.locales,
   });
 
